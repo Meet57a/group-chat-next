@@ -149,37 +149,7 @@ export function StickerPanel({ onStickerSelect, onClose }: StickerPanelProps) {
     }
   }
 
-  const handleDeleteSticker = async (sticker: Sticker) => {
-    if (!userData || (userData.id !== sticker.uploaded_by && userData.role !== "admin")) {
-      alert("You can only delete your own stickers")
-      return
-    }
-
-    if (!confirm("Are you sure you want to delete this sticker?")) {
-      return
-    }
-
-    try {
-      // Delete from storage
-      const fileName = sticker.url.split("/").pop()
-      if (fileName) {
-        const { error: storageError } = await supabase.storage.from("stickers").remove([fileName])
-        if (storageError) {
-          console.error("[v0] Error deleting from storage:", storageError)
-        }
-      }
-
-      // Delete from database
-      const { error: dbError } = await supabase.from("stickers").delete().eq("id", sticker.id)
-
-      if (dbError) throw dbError
-
-      console.log("[v0] Sticker deleted successfully")
-    } catch (error) {
-      console.error("[v0] Error deleting sticker:", error)
-      alert("Failed to delete sticker")
-    }
-  }
+  
 
   return (
     <div className="w-full max-w-md">
@@ -210,16 +180,7 @@ export function StickerPanel({ onStickerSelect, onClose }: StickerPanelProps) {
                     className="w-full h-full object-cover"
                   />
                 </button>
-                {userData && (userData.id === sticker.uploaded_by || userData.role === "admin") && (
-                  <Button
-                    variant="destructive"
-                    size="icon"
-                    className="absolute -top-1 -right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
-                    onClick={() => handleDeleteSticker(sticker)}
-                  >
-                    <Trash2 className="h-3 w-3" />
-                  </Button>
-                )}
+                
               </div>
             ))}
           </div>

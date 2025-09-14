@@ -9,8 +9,9 @@ export default function SignUpSuccessPage() {
           <CardHeader>
             <CardTitle className="text-2xl">Check your email</CardTitle>
             <CardDescription>
-              We've sent you a confirmation link. Please check your email and click the link to activate your account.
+              {"We've sent you a confirmation link. Please check your email and click the link to activate your account."}
             </CardDescription>
+
           </CardHeader>
           <CardContent>
             <div className="text-center">

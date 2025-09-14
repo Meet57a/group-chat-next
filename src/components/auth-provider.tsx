@@ -5,18 +5,26 @@ import { createContext, useContext, useEffect, useState } from "react"
 import { createClient } from "@/lib/client"
 import type { User } from "@supabase/supabase-js"
 
+interface UserData {
+  id: string
+  name: string
+  email: string
+}
+
 interface AuthContextType {
   user: User | null
-  userData: any | null
+  userData: UserData | null
   loading: boolean
   signOut: () => Promise<void>
 }
+
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
-  const [userData, setUserData] = useState<any | null>(null)
+  const [userData, setUserData] = useState<UserData | null>(null)
+
   const [loading, setLoading] = useState(true)
   const supabase = createClient()
 
